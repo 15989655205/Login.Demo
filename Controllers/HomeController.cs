@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Login.Demo.Models;
 
-namespace Login.Demo.Controllers
+namespace Login.Demo.Controllers //1
 {
     public class HomeController : Controller
     {
