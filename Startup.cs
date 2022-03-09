@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Login.Demo.Domain;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,11 @@ namespace Login.Demo
             services.AddDbContext<MyDbContext>(option=> {
                     option.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(op =>
+                {
+                    op.LoginPath = "/user/login";
+                });
             services.AddControllersWithViews();
         }
 
@@ -49,6 +55,9 @@ namespace Login.Demo
 
             app.UseRouting();
 
+            //登录验证
+            app.UseAuthentication();
+            //权限授权
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
